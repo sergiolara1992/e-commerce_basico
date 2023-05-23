@@ -12,15 +12,23 @@ function cargarEventListeners() {
 
   /* Elimina cursos del carrito */
   carrito.addEventListener("click", eliminarCurso);
-}
 
-/* vaciar el carrito  */
+  /* MUESTRA LOS CURSOS DEL LOCAL STORAGE */
 
-vaciarCarritoBtn.addEventListener("click", () =>{
+  document.addEventListener("DOMContentLoaded", () => {
+    articulosCarrito = JSON.parse(localStorage.getItem('carrito') ) || [];
+
+    carritoHTML();
+  });
+
+  /* vaciar el carrito  */
+
+  vaciarCarritoBtn.addEventListener("click", () => {
     articulosCarrito = []; /* RESETEAMOS EL ARREGLO */
 
-    limpiarHTML();/* ELIMINAMOS TODO EL HTML */
-})
+    limpiarHTML(); /* ELIMINAMOS TODO EL HTML */
+  });
+}
 
 /* FUNCIONES */
 
@@ -119,6 +127,14 @@ function carritoHTML() {
 
          contenedorCarrito.appendChild(row);
     });
+
+    /* AGREGAR EL CARRITO DE COMPRAS AL STORAGE */
+
+    sincronizarStorage();
+
+    function sincronizarStorage() {
+      localStorage.setItem('carrito', JSON.stringify(articulosCarrito));
+    }
 }
 
 /* ELIMINA LOS CURSOS DEL TBODY */
